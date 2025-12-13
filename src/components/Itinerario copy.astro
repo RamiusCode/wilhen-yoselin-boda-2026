@@ -1,0 +1,197 @@
+---
+// Itinerario.astro
+---
+
+<section class="relative w-full py-16 px-6 bg-[#f5f3f0]">
+    
+    <div class="max-w-md mx-auto" id="contenedor-itinerario">
+        
+        <!-- TÍTULO -->
+        <div class="text-center mb-12" id="titulo-itinerario">
+            <h2 class="font-serif text-lg uppercase tracking-[0.3em] text-[#<!-- ">
+                ITINERARIO
+            </h2>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="relative">
+            
+            <!-- Línea vertical central -->
+            <div class="absolute left-1/2 transform -translate-x-1/2 w-0.5 bg-[#B8860B] h-full"></div>
+
+            <!-- EVENTO 1: Cóctel de Bienvenida -->
+            <div class="relative flex items-center mb-8" id="evento-1">
+                <div class="w-1/2 pr-8 flex flex-col items-center">
+                    <div class="w-12 h-12 mb-2">
+                        <svg class="w-full h-full text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 18M8 14L10 6L12 14L14 6L16 14" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-600 rounded-full"></div>
+                <div class="w-1/2 pl-8 flex flex-col items-center">
+                    <p class="font-serif text-sm text-gray-800 mb-0.5">05:40 pm</p>
+                    <p class="font-serif text-xs text-gray-600">Cóctel de Bienvenida</p>
+                </div>
+            </div>
+
+            <!-- EVENTO 2: Ceremonia Civil -->
+            <div class="relative flex items-center mb-8" id="evento-2">
+                <div class="w-1/2 pr-8 flex flex-col items-center">
+                    <p class="font-serif text-sm text-gray-800 mb-0.5">06:30 pm</p>
+                    <p class="font-serif text-xs text-gray-600">Ceremonia Civil</p>
+                </div>
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-600 rounded-full"></div>
+                <div class="w-1/2 pl-8 flex flex-col items-center">
+                    <div class="w-12 h-12 mb-2">
+                        <svg class="w-full h-full text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+                            <circle cx="9" cy="12" r="3" />
+                            <circle cx="15" cy="12" r="3" />
+                            <path d="M9 9L15 9" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EVENTO 3: Ceremonia Religiosa -->
+            <div class="relative flex items-center mb-8" id="evento-3">
+                <div class="w-1/2 pr-8 flex flex-col items-center">
+                    <div class="w-12 h-12 mb-2">
+                        <svg class="w-full h-full text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3L4 9v12h16V9l-8-6z" />
+                            <path d="M12 3v6M12 15v6" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-600 rounded-full"></div>
+                <div class="w-1/2 pl-8 flex flex-col items-center">
+                    <p class="font-serif text-sm text-gray-800 mb-0.5">07:00 pm</p>
+                    <p class="font-serif text-xs text-gray-600">Ceremonia Religiosa</p>
+                </div>
+            </div>
+
+            <!-- EVENTO 4: Recepción -->
+            <div class="relative flex items-center mb-8" id="evento-4">
+                <div class="w-1/2 pr-8 flex flex-col items-center">
+                    <p class="font-serif text-sm text-[#B8860B] mb-0.5">08:00 pm</p>
+                    <p class="font-serif text-xs text-[#B8860B]">Recepción</p>
+                </div>
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-600 rounded-full"></div>
+                <div class="w-1/2 pl-8 flex flex-col items-center">
+                    <div class="w-12 h-12 mb-2">
+                        <svg class="w-full h-full text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EVENTO 5: Vals y Brindis -->
+            <div class="relative flex items-center" id="evento-5">
+                <div class="w-1/2 pr-8 flex flex-col items-center">
+                    <div class="w-12 h-12 mb-2">
+                        <svg class="w-full h-full text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-400 rounded-full"></div>
+                <div class="w-1/2 pl-8 flex flex-col items-center">
+                    <p class="font-serif text-sm text-gray-400 mb-0.5">08:15 pm</p>
+                    <p class="font-serif text-xs text-gray-400">Vals y Brindis</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("📋 Iniciando itinerario...");
+
+        // ═══ ESTADO INICIAL ═══
+        gsap.set("#titulo-itinerario", { opacity: 0, y: -20 });
+        gsap.set("#evento-1, #evento-2, #evento-3, #evento-4, #evento-5", { opacity: 0, x: -30 });
+
+        // ═══ ANIMACIÓN EN CASCADA ═══
+        ScrollTrigger.create({
+            trigger: "#contenedor-itinerario",
+            start: "top 80%",
+            onEnter: () => {
+                const tl = gsap.timeline();
+
+                tl.to("#titulo-itinerario", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "power2.out",
+                })
+                .to("#evento-1", {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.5,
+                    ease: "power2.out",
+                }, "-=0.2")
+                .to("#evento-2", {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.5,
+                    ease: "power2.out",
+                }, "-=0.3")
+                .to("#evento-3", {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.5,
+                    ease: "power2.out",
+                }, "-=0.3")
+                .to("#evento-4", {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.5,
+                    ease: "power2.out",
+                }, "-=0.3")
+                .to("#evento-5", {
+                    opacity: 1,
+                    x: 0,
+                    duration: 0.5,
+                    ease: "power2.out",
+                }, "-=0.3");
+            },
+            onLeaveBack: () => {
+                gsap.set("#titulo-itinerario", { opacity: 0, y: -20 });
+                gsap.set("#evento-1, #evento-2, #evento-3, #evento-4, #evento-5", { opacity: 0, x: -30 });
+            },
+        });
+
+        // ═══ ACTIVAR SI YA ESTÁ VISIBLE ═══
+        ScrollTrigger.refresh();
+        const triggerElement = document.querySelector("#contenedor-itinerario");
+        if (triggerElement) {
+            const rect = triggerElement.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight * 0.8;
+            
+            if (isInView) {
+                const tl = gsap.timeline();
+                tl.to("#titulo-itinerario", { opacity: 1, y: 0, duration: 0.6 })
+                .to("#evento-1", { opacity: 1, x: 0, duration: 0.5 }, "-=0.2")
+                .to("#evento-2", { opacity: 1, x: 0, duration: 0.5 }, "-=0.3")
+                .to("#evento-3", { opacity: 1, x: 0, duration: 0.5 }, "-=0.3")
+                .to("#evento-4", { opacity: 1, x: 0, duration: 0.5 }, "-=0.3")
+                .to("#evento-5", { opacity: 1, x: 0, duration: 0.5 }, "-=0.3");
+            }
+        }
+
+        console.log("📋✨ Itinerario activado!");
+    });
+</script>

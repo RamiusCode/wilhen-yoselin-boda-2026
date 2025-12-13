@@ -1,0 +1,390 @@
+---
+// NombresFlores.astro (ComponenteInvitacion.astro)
+---
+
+<section class="relative w-full">
+    
+    <!-- REPRODUCTOR DE MÚSICA - Fijo en la esquina superior derecha -->
+    <div id="reproductor-fijo" class="fixed top-4 right-4 z-50">
+        
+        <!-- Círculo del reproductor con efecto blur -->
+        <button 
+            id="btn-reproducir"
+            class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full backdrop-blur-md bg-gradient-to-br from-[#C9A961]/30 to-[#6B7154]/30 shadow-xl flex items-center justify-center border-2 border-white/40 transition-transform hover:scale-110"
+            title="Reproducir/Pausar música"
+        >
+            <!-- Ícono de Play -->
+            <svg 
+                id="icono-play" 
+                class="hidden w-6 h-6 sm:w-8 sm:h-8 text-white drop-shadow-lg"
+                fill="currentColor" 
+                viewBox="0 0 24 24"
+            >
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            
+            <!-- Ícono de Pause (visible al inicio) -->
+            <svg 
+                id="icono-pause" 
+                class="w-6 h-6 sm:w-8 sm:h-8 text-white drop-shadow-lg"
+                fill="currentColor" 
+                viewBox="0 0 24 24"
+            >
+                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Audio element (oculto) -->
+    <audio id="audio-player" preload="auto" loop>
+        <source src="/audio/melodia.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <!-- Contenedor de la Imagen con efecto parallax -->
+    <div class="relative w-full h-screen overflow-hidden">
+        <!-- Imagen Principal con efecto parallax -->
+        <div id="parallax-container" class="absolute top-0 left-0 w-full h-[120vh]">
+            <img
+                id="imagen-principal"
+                src="/imagenes/fotoprincipal.webp"
+                alt="Foto de los novios"
+                class="w-full h-full object-cover"
+            />
+            
+            <!-- Overlay suave para mejorar legibilidad -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20"></div>
+        </div>
+
+        <!-- Partículas flotantes decorativas -->
+        <div id="particulas-container" class="absolute inset-0 pointer-events-none">
+            <div class="particula"></div>
+            <div class="particula"></div>
+            <div class="particula"></div>
+            <div class="particula"></div>
+            <div class="particula"></div>
+        </div>
+    </div>
+
+   
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP Y REPRODUCTOR                       -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("🎊 Iniciando animaciones de invitación con parallax...");
+
+        // ═══ REPRODUCTOR DE MÚSICA ═══
+        const audio = document.getElementById("audio-player") as HTMLAudioElement;
+        const btnReproducir = document.getElementById("btn-reproducir");
+        const iconoPlay = document.getElementById("icono-play");
+        const iconoPause = document.getElementById("icono-pause");
+
+        let estaReproduciendo = false;
+
+        const intentarReproducir = async () => {
+            try {
+                await audio?.play();
+                estaReproduciendo = true;
+                iconoPlay?.classList.add("hidden");
+                iconoPause?.classList.remove("hidden");
+                console.log("🎵 Música iniciada automáticamente");
+            } catch (error) {
+                console.log("⚠️ No se pudo reproducir automáticamente, esperando interacción del usuario");
+                estaReproduciendo = false;
+                iconoPlay?.classList.remove("hidden");
+                iconoPause?.classList.add("hidden");
+            }
+        };
+
+        setTimeout(() => {
+            intentarReproducir();
+        }, 300);
+
+        const iniciarConInteraccion = () => {
+            if (!estaReproduciendo) {
+                intentarReproducir();
+            }
+        };
+
+        document.addEventListener("click", iniciarConInteraccion, { once: true });
+        document.addEventListener("touchstart", iniciarConInteraccion, { once: true });
+
+        btnReproducir?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            
+            if (!estaReproduciendo) {
+                audio?.play();
+                estaReproduciendo = true;
+                iconoPlay?.classList.add("hidden");
+                iconoPause?.classList.remove("hidden");
+            } else {
+                audio?.pause();
+                estaReproduciendo = false;
+                iconoPlay?.classList.remove("hidden");
+                iconoPause?.classList.add("hidden");
+            }
+        });
+
+        audio?.addEventListener("ended", () => {
+            estaReproduciendo = false;
+            iconoPlay?.classList.remove("hidden");
+            iconoPause?.classList.add("hidden");
+        });
+
+        // ═══ IMAGEN PRINCIPAL - Fade in con zoom suave ═══
+        gsap.fromTo(
+            "#imagen-principal",
+            { opacity: 0, scale: 1.2 },
+            { 
+                opacity: 1, 
+                scale: 1.1, 
+                duration: 2, 
+                ease: "power2.out"
+            }
+        );
+
+        // ═══ EFECTO PARALLAX ELEGANTE ═══
+        gsap.to("#parallax-container", {
+            yPercent: 30,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "section",
+                start: "top top",
+                end: "bottom top",
+                scrub: 1.5
+            }
+        });
+
+        // ═══ ZOOM OUT SUAVE AL HACER SCROLL ═══
+        gsap.to("#imagen-principal", {
+            scale: 1,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "section",
+                start: "top top",
+                end: "bottom top",
+                scrub: 1.5
+            }
+        });
+
+        // ═══ ANIMACIÓN DE PARTÍCULAS FLOTANTES ═══
+        const particulas = document.querySelectorAll(".particula");
+        particulas.forEach((particula, index) => {
+            gsap.to(particula, {
+                y: -100,
+                x: gsap.utils.random(-50, 50),
+                opacity: 0,
+                duration: gsap.utils.random(3, 5),
+                repeat: -1,
+                delay: index * 0.5,
+                ease: "none"
+            });
+        });
+
+        // ═══ ARO DECORATIVO - Aparece desde abajo con ScrollTrigger ═══
+        gsap.fromTo(
+            "#aro-decorativo",
+            { opacity: 0, y: 100, scale: 0.8, rotation: -15 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1, 
+                rotation: 0, 
+                duration: 1.2, 
+                ease: "back.out(1.7)",
+                scrollTrigger: {
+                    trigger: "#aro-decorativo",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            }
+        );
+
+        // ═══ NOMBRE JOHN - Letra por letra con ScrollTrigger ═══
+        const textoJohn = "John";
+        const contenedorJohn = document.getElementById("nombre-john");
+        if (contenedorJohn) {
+            contenedorJohn.innerHTML = textoJohn
+                .split("")
+                .map(
+                    (letra) =>
+                        `<span class="letra-animada" style="
+                            opacity: 0; 
+                            display: inline-block; 
+                            transform: translateY(20px) scale(0.8);
+                            filter: blur(3px);
+                        ">${letra}</span>`
+                )
+                .join("");
+
+            gsap.to("#nombre-john .letra-animada", {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+                duration: 0.6,
+                ease: "back.out(1.5)",
+                stagger: { each: 0.08, from: "start" },
+                scrollTrigger: {
+                    trigger: "#nombre-john",
+                    start: "top 75%",
+                    toggleActions: "play none none none"
+                }
+            });
+        }
+
+        // ═══ SÍMBOLO & - Scale con bounce ═══
+        gsap.fromTo(
+            "#ampersand",
+            { opacity: 0, scale: 0.3, rotation: -180 },
+            { 
+                opacity: 1, 
+                scale: 1, 
+                rotation: 0,
+                duration: 0.8, 
+                ease: "elastic.out(1, 0.5)",
+                scrollTrigger: {
+                    trigger: "#ampersand",
+                    start: "top 75%",
+                    toggleActions: "play none none none"
+                }
+            }
+        );
+
+        // ═══ NOMBRE DAMARYS - Letra por letra ═══
+        const textoDamarys = "Damarys";
+        const contenedorDamarys = document.getElementById("nombre-damarys");
+        if (contenedorDamarys) {
+            contenedorDamarys.innerHTML = textoDamarys
+                .split("")
+                .map(
+                    (letra) =>
+                        `<span class="letra-animada" style="
+                            opacity: 0; 
+                            display: inline-block; 
+                            transform: translateY(20px) scale(0.8);
+                            filter: blur(3px);
+                        ">${letra}</span>`
+                )
+                .join("");
+
+            gsap.to("#nombre-damarys .letra-animada", {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+                duration: 0.6,
+                ease: "back.out(1.5)",
+                stagger: { each: 0.08, from: "start" },
+                scrollTrigger: {
+                    trigger: "#nombre-damarys",
+                    start: "top 75%",
+                    toggleActions: "play none none none"
+                }
+            });
+        }
+
+        // ═══ ROTACIÓN SUAVE Y FLOTACIÓN DEL ARO (loop infinito) ═══
+        gsap.to("#aro-decorativo", {
+            rotation: 8,
+            y: -10,
+            duration: 4,
+            ease: "sine.inOut",
+            yoyo: true,
+            repeat: -1
+        });
+
+        // ═══ EFECTO DE BRILLO EN LOS NOMBRES ═══
+        gsap.to("#nombre-john, #nombre-damarys", {
+            textShadow: "0 0 20px rgba(201, 169, 97, 0.6)",
+            duration: 2,
+            ease: "sine.inOut",
+            yoyo: true,
+            repeat: -1
+        });
+
+        console.log("✨ Animaciones con parallax completadas!");
+    });
+</script>
+
+<style>
+    /* Asegurar que las imágenes carguen correctamente */
+    img {
+        display: block;
+    }
+    
+    /* Efecto hover en letras animadas */
+    .letra-animada {
+        transition: all 0.3s ease;
+        will-change: transform, opacity, filter;
+        position: relative;
+    }
+
+    .letra-animada:hover {
+        transform: translateY(-5px) scale(1.15) !important;
+        text-shadow: 0 0 20px rgba(201, 169, 97, 0.8) !important;
+        filter: brightness(1.2) !important;
+    }
+
+    /* Partículas decorativas flotantes */
+    .particula {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: radial-gradient(circle, rgba(201, 169, 97, 0.8), transparent);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .particula:nth-child(1) {
+        left: 20%;
+        top: 80%;
+        width: 6px;
+        height: 6px;
+    }
+
+    .particula:nth-child(2) {
+        left: 50%;
+        top: 70%;
+        width: 4px;
+        height: 4px;
+    }
+
+    .particula:nth-child(3) {
+        left: 80%;
+        top: 75%;
+        width: 5px;
+        height: 5px;
+    }
+
+    .particula:nth-child(4) {
+        left: 35%;
+        top: 85%;
+        width: 3px;
+        height: 3px;
+    }
+
+    .particula:nth-child(5) {
+        left: 65%;
+        top: 80%;
+        width: 4px;
+        height: 4px;
+    }
+
+    /* Responsivo */
+    @media (max-width: 640px) {
+        #reproductor-fijo {
+            top: 0.75rem;
+            right: 0.75rem;
+        }
+    }
+</style>

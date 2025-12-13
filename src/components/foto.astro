@@ -1,0 +1,79 @@
+---
+// FotoCompleta.astro
+---
+
+<section class="relative w-full h-screen overflow-hidden">
+    
+    <!-- Foto de esquina a esquina -->
+    <div class="w-full h-full" id="contenedor-foto">
+        <img
+            id="foto-principal"
+            src="/imagenes/foto2.webp"
+            alt="Foto especial"
+            class="w-full h-full object-cover object-left"
+        />
+    </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("📸 Iniciando animación de foto completa...");
+
+        // Estado inicial
+        gsap.set("#foto-principal", { scale: 1.2, opacity: 0 });
+
+        // ═══ ANIMACIÓN ELEGANTE - Zoom out + Fade in ═══
+        ScrollTrigger.create({
+            trigger: "#contenedor-foto",
+            start: "top 80%",
+            onEnter: () => {
+                gsap.to("#foto-principal", {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 1.5,
+                    ease: "power2.out",
+                });
+            },
+            onLeaveBack: () => {
+                gsap.set("#foto-principal", { scale: 1.2, opacity: 0 });
+            },
+        });
+
+        // ═══ ACTIVAR SI YA ESTÁ VISIBLE ═══
+        ScrollTrigger.refresh();
+        const triggerElement = document.querySelector("#contenedor-foto");
+        if (triggerElement) {
+            const rect = triggerElement.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight * 0.8;
+            
+            if (isInView) {
+                gsap.to("#foto-principal", {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 1.5,
+                    ease: "power2.out",
+                });
+            }
+        }
+
+        console.log("📸✨ Animación de foto activada!");
+    });
+</script>
+
+<style>
+    /* Optimización de rendimiento */
+    #foto-principal {
+        backface-visibility: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+</style>

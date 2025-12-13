@@ -1,0 +1,45 @@
+---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+
+// Importar la PORTADA primero
+import Portada from '../components/Portada.astro';
+
+import NombresFlores from '../components/NombresFlores.astro';
+import Fecha from '../components/Fecha.astro';
+
+import Nombres from '../components/Nombres.astro';
+import DireccionIglesia from '../components/DireccionIglesia.astro';
+
+import Itinerario from '../components/Itinerario.astro';
+
+import Restringir from '../components/Restringir.astro';
+
+import Despedida from '../components/Despedida.astro';
+
+import Pase2 from '../components/pase2.astro';
+
+import Foto from '../components/foto.astro';
+import Regalo from '../components/Regalo.astro';
+import Confirmar from '../components/Confirmar.astro';
+---
+
+<Layout title="Mi Boda">
+
+<!-- 🎊 PORTADA DE BIENVENIDA (se muestra primero) -->
+<Portada/>
+<!-- <Reproductor/> -->
+<!-- 📋 RESTO DE COMPONENTES (se muestran después de presionar INGRESAR) -->
+<NombresFlores/>
+<Pase2/>
+<Nombres/>
+<Foto/>
+<Fecha/>
+<DireccionIglesia/>
+ <Itinerario/>
+ <Regalo/>
+<Confirmar/>
+<Restringir/>
+<Despedida/>
+
+</Layout>

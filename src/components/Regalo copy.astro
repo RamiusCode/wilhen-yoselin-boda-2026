@@ -1,0 +1,150 @@
+---
+// Regalos.astro
+---
+
+<section class="relative w-full py-16 px-6 bg-[#f5f3f0]">
+    
+    <div class="max-w-sm mx-auto space-y-6" id="contenedor-regalos">
+        
+        <!-- TARJETA 1: SUGERENCIA DE REGALO -->
+        <div class="bg-white rounded-3xl border-2 border-gray-400 p-8 text-center" id="tarjeta-regalo">
+            <!-- Icono regalo -->
+            <div class="flex justify-center mb-4">
+                <svg class="w-12 h-12 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                </svg>
+            </div>
+            
+            <!-- Título -->
+            <h3 class="font-serif text-xs uppercase tracking-[0.2em] text-gray-800 mb-4">
+                Sugerencia de Regalo
+            </h3>
+            
+            <!-- Texto -->
+            <p class="font-serif text-xs text-gray-600 leading-relaxed">
+                El mejor regalo es tu presencia, pero si deseas tener un<br />
+                detalle con nosotros, te dejamos estas opciones
+            </p>
+        </div>
+
+        <!-- TARJETA 2: TRANSFERENCIA QR -->
+        <div class="bg-white rounded-3xl border-2 border-gray-400 p-8 text-center" id="tarjeta-qr">
+            <!-- Título -->
+            <h3 class="font-serif text-xs uppercase tracking-[0.2em] text-gray-800 mb-6">
+                Transferencia QR
+            </h3>
+            
+            <!-- QR Code (placeholder) -->
+            <div class="flex justify-center mb-4">
+                <div class="w-48 h-48 bg-white border-2 border-gray-300 rounded-lg flex items-center justify-center">
+                    <img src="/imagenes/qr-code.png" alt="Código QR" class="w-full h-full object-contain p-2" />
+                </div>
+            </div>
+        </div>
+
+        <!-- TARJETA 3: NOVIOS MULTICENTER -->
+        <div class="bg-white rounded-3xl border-2 border-gray-400 p-8 text-center" id="tarjeta-multicenter">
+            <!-- Logo -->
+            <div class="flex justify-center mb-6">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-teal-700 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L4 7v10l8 5 8-5V7l-8-5z"/>
+                        </svg>
+                    </div>
+                    <div class="text-left">
+                        <p class="font-sans text-teal-700 text-sm font-semibold leading-tight">novios</p>
+                        <p class="font-sans text-teal-700 text-xs leading-tight">multicenter</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Botón -->
+            <a href="https://www.noviosmulticenter.com" target="_blank" class="inline-block bg-[#5a6b4d] hover:bg-[#4a5a3d] text-white px-8 py-3 rounded-lg font-sans text-sm transition-colors duration-300">
+                Contactar
+            </a>
+        </div>
+
+        <!-- Texto inferior -->
+        <div class="text-center pt-4" id="texto-inferior">
+            <p class="font-serif text-xs text-gray-400 leading-relaxed">
+                Si prefieres hacer un regalo en efectivo, habrá un buzón<br />
+                especial en la recepción
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("🎁 Iniciando sección de regalos...");
+
+        // ═══ ESTADO INICIAL ═══
+        gsap.set("#tarjeta-regalo, #tarjeta-qr, #tarjeta-multicenter, #texto-inferior", { opacity: 0, y: 30 });
+
+        // ═══ ANIMACIÓN EN CASCADA ═══
+        ScrollTrigger.create({
+            trigger: "#contenedor-regalos",
+            start: "top 80%",
+            onEnter: () => {
+                const tl = gsap.timeline();
+
+                tl.to("#tarjeta-regalo", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "back.out(1.2)",
+                })
+                .to("#tarjeta-qr", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "back.out(1.2)",
+                }, "-=0.3")
+                .to("#tarjeta-multicenter", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "back.out(1.2)",
+                }, "-=0.3")
+                .to("#texto-inferior", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    ease: "power2.out",
+                }, "-=0.2");
+            },
+            onLeaveBack: () => {
+                gsap.set("#tarjeta-regalo, #tarjeta-qr, #tarjeta-multicenter, #texto-inferior", { opacity: 0, y: 30 });
+            },
+        });
+
+        // ═══ ACTIVAR SI YA ESTÁ VISIBLE ═══
+        ScrollTrigger.refresh();
+        const triggerElement = document.querySelector("#contenedor-regalos");
+        if (triggerElement) {
+            const rect = triggerElement.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight * 0.8;
+            
+            if (isInView) {
+                const tl = gsap.timeline();
+                tl.to("#tarjeta-regalo", { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.2)" })
+                .to("#tarjeta-qr", { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.2)" }, "-=0.3")
+                .to("#tarjeta-multicenter", { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.2)" }, "-=0.3")
+                .to("#texto-inferior", { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, "-=0.2");
+            }
+        }
+
+        console.log("🎁✨ Sección de regalos activada!");
+    });
+</script>

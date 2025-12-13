@@ -1,0 +1,109 @@
+---
+// ConfirmacionAsistencia.astro
+---
+
+<section class="relative w-full py-16 px-6 ">
+    
+    <div class="max-w-md mx-auto text-center" id="contenedor-confirmacion">
+        
+                <div class="flex justify-center mx-auto mb-8">
+            <div class="w-16 h-16">
+                <img 
+                    src="/imagenes/boda.png" 
+                    alt="Icono de Boda" 
+                    class="w-full h-full object-contain"
+                />
+            </div>
+        </div>
+
+                <div class="mb-4" id="texto-confirmacion">
+            <p class="font-serif text-lg text-[#4E5F49] leading-relaxed">
+                “En el amor no hay temor, sino que el perfecto amor echa fuera el temor. Nosotros amamos, porque Él nos amó primero.”
+            </p>
+        </div>
+
+                <div class="mb-8" id="titulo-confirmacion">
+            <h3 class="font-serif text-xs uppercase text-[#4E5F49] font-bold tracking-[0.2em]">
+                1 Juan 4:18–19
+            </h3>
+        </div>
+
+
+    </div>
+
+</section>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("✅ Iniciando confirmación de asistencia...");
+
+        // ═══ ESTADO INICIAL ═══
+        // Incluimos el icono para que desaparezca al cargar y se anime (opcional, pero ayuda a la coherencia)
+        gsap.set("#contenedor-confirmacion img, #texto-confirmacion, #titulo-confirmacion, #boton-confirmar", { opacity: 0, y: 20 });
+
+        // ═══ ANIMACIÓN EN CASCADA ═══
+        ScrollTrigger.create({
+            trigger: "#contenedor-confirmacion",
+            start: "top 80%",
+            onEnter: () => {
+                const tl = gsap.timeline();
+
+                // Animación de la imagen/icono
+                tl.to("#contenedor-confirmacion img", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "power2.out",
+                })
+                // Animación del texto
+                .to("#texto-confirmacion", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "power2.out",
+                }, "-=0.3")
+                // Animación del título/referencia
+                .to("#titulo-confirmacion", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "power2.out",
+                }, "-=0.3")
+                // Animación del botón
+                .to("#boton-confirmar", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "back.out(1.2)",
+                }, "-=0.3");
+            },
+            onLeaveBack: () => {
+                // Reinicia todos los elementos
+                gsap.set("#contenedor-confirmacion img, #texto-confirmacion, #titulo-confirmacion, #boton-confirmar", { opacity: 0, y: 20 });
+            },
+        });
+
+        // ═══ ACTIVAR SI YA ESTÁ VISIBLE (Carga Inicial) ═══
+        ScrollTrigger.refresh();
+        const triggerElement = document.querySelector("#contenedor-confirmacion");
+        if (triggerElement) {
+            const rect = triggerElement.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight * 0.8;
+            
+            if (isInView) {
+                const tl = gsap.timeline();
+                tl.to("#contenedor-confirmacion img", { opacity: 1, y: 0, duration: 0.6 })
+                .to("#texto-confirmacion", { opacity: 1, y: 0, duration: 0.6 }, "-=0.3")
+                .to("#titulo-confirmacion", { opacity: 1, y: 0, duration: 0.6 }, "-=0.3")
+                .to("#boton-confirmar", { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.2)" }, "-=0.3");
+            }
+        }
+
+        console.log("✅✨ Confirmación de asistencia activada!");
+    });
+</script>

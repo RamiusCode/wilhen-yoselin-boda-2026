@@ -1,0 +1,96 @@
+---
+// SoloAdultos.astro
+---
+
+<section class="relative w-full py-16 px-6 bg-[#f5f3f0]">
+    
+    <div class="max-w-sm mx-auto" id="contenedor-adultos">
+        
+        <!-- CARD CON BORDE -->
+        <div class="bg-white rounded-3xl border-2 border-gray-400 p-8 text-center">
+            
+            <!-- ICONO -->
+            <div class="flex justify-center mb-6" id="icono-adultos">
+                <div class="w-16 h-16 border-2 border-gray-600 rounded-full flex items-center justify-center">
+                    <svg class="w-10 h-10 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                        <circle cx="12" cy="12" r="9" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- TÍTULO -->
+            <div class="mb-4" id="titulo-adultos">
+                <h3 class="font-serif text-lg uppercase tracking-[0.25em] text-gray-800">
+                    Solo Adultos
+                </h3>
+            </div>
+            
+            <!-- TEXTO -->
+            <div id="texto-adultos">
+                <p class="font-serif text-lg text-gray-600 leading-relaxed">
+                    Un evento para adultos está en camino. ¡Así que<br />
+                    prepárense para una noche llena de diversión!
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("🔞 Iniciando sección solo adultos...");
+
+        // ═══ ESTADO INICIAL ═══
+        gsap.set("#contenedor-adultos", { opacity: 0, scale: 0.95, y: 30 });
+
+        // ═══ ANIMACIÓN ═══
+        ScrollTrigger.create({
+            trigger: "#contenedor-adultos",
+            start: "top 80%",
+            onEnter: () => {
+                gsap.to("#contenedor-adultos", {
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "back.out(1.2)",
+                });
+            },
+            onLeaveBack: () => {
+                gsap.set("#contenedor-adultos", { opacity: 0, scale: 0.95, y: 30 });
+            },
+        });
+
+        // ═══ ACTIVAR SI YA ESTÁ VISIBLE ═══
+        ScrollTrigger.refresh();
+        const triggerElement = document.querySelector("#contenedor-adultos");
+        if (triggerElement) {
+            const rect = triggerElement.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight * 0.8;
+            
+            if (isInView) {
+                gsap.to("#contenedor-adultos", {
+                    opacity: 1,
+                    scale: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "back.out(1.2)",
+                });
+            }
+        }
+
+        console.log("🔞✨ Sección solo adultos activada!");
+    });
+</script>

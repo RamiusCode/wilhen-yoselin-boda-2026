@@ -1,0 +1,47 @@
+---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+
+// 👇 AGREGA ESTA LÍNEA
+import Portada from '../components/Portada.astro';
+
+import NombresFlores from '../components/NombresFlores.astro';
+import Fecha from '../components/Fecha.astro';
+import Contador from '../components/Contador.astro';
+import Pase from '../components/Pase.astro';
+import Nombres from '../components/Nombres.astro';
+import DireccionIglesia from '../components/DireccionIglesia.astro';
+import DireccionRecepcion from '../components/DireccionRecepcion.astro';
+import DressCode from '../components/DressCode.astro';
+import Itinerario from '../components/Itinerario.astro';
+import CompartirFotos from '../components/CompartirFotos.astro';
+import Restringir from '../components/Restringir.astro';
+import SugerenciaRegalo from '../components/SugerenciaRegalo.astro';
+import ConfirmarAsistencia from '../components/ConfirmarAsistencia.astro';
+import Despedida from '../components/Despedida.astro';
+import Galeria from '../components/Galeria.astro';
+---
+
+<Layout title="Mi Boda">
+
+<!-- 👇 AGREGA ESTE COMPONENTE PRIMERO -->
+<Portada/>
+
+<!-- Resto de componentes -->
+<NombresFlores/>
+<Fecha/>
+<Contador/>
+<Pase/>
+<Nombres/>
+<!-- <DireccionIglesia/> -->
+<DireccionRecepcion/>
+<DressCode/>
+<Galeria/>
+<!-- <Itinerario/> -->
+<!-- <CompartirFotos/> -->
+<Restringir/>
+<SugerenciaRegalo/>
+<ConfirmarAsistencia/>
+<Despedida/>
+
+</Layout>

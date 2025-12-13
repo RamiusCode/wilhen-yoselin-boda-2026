@@ -1,0 +1,169 @@
+---
+// CeremoniasEventos.astro
+---
+
+<section class="relative w-full py-2 px-6">
+    
+    <div class="max-w-sm mx-auto space-y-12" id="contenedor-eventos">
+        
+        <!-- CEREMONIA CIVIL -->
+        <div class="text-center" id="ceremonia-civil">
+            <!-- Icono anillos -->
+           <!-- Imagen anillos -->
+<div class="flex justify-center mb-4">
+    <img 
+        src="/imagenes/iglesia1.png" 
+        alt="Icono Iglesia" 
+        class="w-12 h-12 object-contain"
+    />
+</div>
+
+            
+            <!-- Título -->
+            <h3 class="font-serif text-lg uppercase tracking-[0.2em] text-[#4E5F49] mb-2">
+                Ceremonia Religiosa
+            </h3>
+            
+            <!-- Lugar -->
+            <p class="font-serif text-lg text-[#4E5F49] mb-4">
+                Parroquia Santa Rosa de lima
+            </p>
+            
+            <!-- Hora y Botón -->
+            <div class="flex items-center justify-center gap-3">
+                <div class="bg-transparent border border-gray-400 rounded px-6 py-2">
+                    <p class="font-old-standard text-sm text-[#4E5F49]">17:30 HRS.</p>
+                </div>
+                <a href="https://maps.app.goo.gl/JnsPvLtSAop8iai57?g_st=iw" target="_blank" class="bg-[#4E5F49] hover:bg-[#4a5a3d] text-white px-6 py-2 rounded font-serif text-sm transition-colors duration-300">
+                    Ubicación
+                </a>
+            </div>
+        </div>
+
+        <!-- CEREMONIA RELIGIOSA -->
+        <div class="text-center" id="ceremonia-religiosa">
+            <!-- Icono iglesia -->
+           <div class="flex justify-center mb-4">
+    <img 
+        src="/imagenes/arco.png" 
+        alt="Icono Iglesia" 
+        class="w-12 h-12 object-contain"
+    />
+</div>
+            
+            <!-- Título -->
+            <h3 class="font-serif text-lg uppercase tracking-[0.2em] text-[#4E5F49]  mb-2">
+                Ceremonia Civil
+            </h3>
+            
+            <!-- Lugar -->
+            <p class="font-serif text-lg text-[#4E5F49] mb-4">
+                Salón de Eventos Imperia
+            </p>
+            
+            <!-- Hora y Botón -->
+            <div class="flex items-center justify-center gap-3">
+                <div class="bg-transparent border border-gray-400 rounded px-6 py-2">
+                    <p class="font-sans text-sm text-[#4E5F49]">19:00 HRS.</p>
+                </div>
+                <a href="https://maps.app.goo.gl/X3mUXiRH7uQ949Gb8?g_st=iw" target="_blank" class="bg-[#4E5F49] hover:bg-[#4a5a3d] text-white px-6 py-2 rounded font-serif text-sm transition-colors duration-300">
+                    Ubicación
+                </a>
+            </div>
+        </div>
+
+        <!-- CÓDIGO DE VESTIMENTA -->
+        <div class="border-2 border-gray-400 rounded-3xl p-8 text-center" id="vestimenta">
+            <!-- Icono pareja -->
+          <div class="flex justify-center mb-4">
+    <img 
+        src="/imagenes/vestido.png" 
+        alt="Icono Iglesia" 
+        class="w-20 h-20 object-contain"
+    />
+</div>
+            
+            <!-- Título -->
+            <h3 class="font-serif text-lg uppercase tracking-[0.2em] text-[#4E5F49] mb-3">
+                Código de Vestimenta
+            </h3>
+            
+            <!-- FORMAL -->
+            <p class="font-serif text-lg text-[#4E5F49] font-semibold mb-3">
+                FORMAL
+            </p>
+            
+            <!-- Descripción -->
+            <p class="font-serif text-lg text-[#4E5F49] leading-relaxed">
+                Queremos que disfrutes de esta<br />celebración de gala
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("💒 Iniciando sección de ceremonias...");
+
+        // ═══ ESTADO INICIAL ═══
+        gsap.set("#ceremonia-civil, #ceremonia-religiosa, #vestimenta", { opacity: 0, y: 30 });
+
+        // ═══ ANIMACIÓN EN CASCADA ═══
+        ScrollTrigger.create({
+            trigger: "#contenedor-eventos",
+            start: "top 80%",
+            onEnter: () => {
+                const tl = gsap.timeline();
+
+                tl.to("#ceremonia-civil", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "back.out(1.2)",
+                })
+                .to("#ceremonia-religiosa", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "back.out(1.2)",
+                }, "-=0.3")
+                .to("#vestimenta", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "back.out(1.2)",
+                }, "-=0.3");
+            },
+            onLeaveBack: () => {
+                gsap.set("#ceremonia-civil, #ceremonia-religiosa, #vestimenta", { opacity: 0, y: 30 });
+            },
+        });
+
+        // ═══ ACTIVAR SI YA ESTÁ VISIBLE ═══
+        ScrollTrigger.refresh();
+        const triggerElement = document.querySelector("#contenedor-eventos");
+        if (triggerElement) {
+            const rect = triggerElement.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight * 0.8;
+            
+            if (isInView) {
+                const tl = gsap.timeline();
+                tl.to("#ceremonia-civil", { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.2)" })
+                .to("#ceremonia-religiosa", { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.2)" }, "-=0.3")
+                .to("#vestimenta", { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.2)" }, "-=0.3");
+            }
+        }
+
+        console.log("💒✨ Sección de ceremonias activada!");
+    });
+</script>

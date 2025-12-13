@@ -1,0 +1,99 @@
+---
+// ConfirmacionAsistencia.astro
+---
+
+<section class="relative w-full py-16 px-6 bg-[#f5f3f0]">
+    
+    <div class="max-w-md mx-auto text-center" id="contenedor-confirmacion">
+        
+        <!-- TEXTO SUPERIOR -->
+        <div class="mb-8" id="texto-confirmacion">
+            <p class="font-serif text-xs text-gray-700 leading-relaxed">
+                Agradecemos mucho tu puntualidad para que puedan<br />
+                disfrutar de todo lo que hemos organizado para ustedes<br />
+                con mucho cariño
+            </p>
+        </div>
+
+        <!-- TÍTULO -->
+        <div class="mb-8" id="titulo-confirmacion">
+            <h3 class="font-serif text-xs uppercase tracking-[0.25em] text-gray-800">
+                Confirmación de Asistencia
+            </h3>
+        </div>
+
+        <!-- BOTÓN -->
+        <div id="boton-confirmar">
+            <a href="https://wa.me/1234567890" target="_blank" class="inline-block bg-[#5a6b4d] hover:bg-[#4a5a3d] text-white px-10 py-3 rounded-lg font-sans text-sm transition-colors duration-300">
+                Confirmar
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("✅ Iniciando confirmación de asistencia...");
+
+        // ═══ ESTADO INICIAL ═══
+        gsap.set("#texto-confirmacion, #titulo-confirmacion, #boton-confirmar", { opacity: 0, y: 20 });
+
+        // ═══ ANIMACIÓN EN CASCADA ═══
+        ScrollTrigger.create({
+            trigger: "#contenedor-confirmacion",
+            start: "top 80%",
+            onEnter: () => {
+                const tl = gsap.timeline();
+
+                tl.to("#texto-confirmacion", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "power2.out",
+                })
+                .to("#titulo-confirmacion", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "power2.out",
+                }, "-=0.3")
+                .to("#boton-confirmar", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: "back.out(1.2)",
+                }, "-=0.3");
+            },
+            onLeaveBack: () => {
+                gsap.set("#texto-confirmacion, #titulo-confirmacion, #boton-confirmar", { opacity: 0, y: 20 });
+            },
+        });
+
+        // ═══ ACTIVAR SI YA ESTÁ VISIBLE ═══
+        ScrollTrigger.refresh();
+        const triggerElement = document.querySelector("#contenedor-confirmacion");
+        if (triggerElement) {
+            const rect = triggerElement.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight * 0.8;
+            
+            if (isInView) {
+                const tl = gsap.timeline();
+                tl.to("#texto-confirmacion", { opacity: 1, y: 0, duration: 0.6 })
+                .to("#titulo-confirmacion", { opacity: 1, y: 0, duration: 0.6 }, "-=0.3")
+                .to("#boton-confirmar", { opacity: 1, y: 0, duration: 0.6 }, "-=0.3");
+            }
+        }
+
+        console.log("✅✨ Confirmación de asistencia activada!");
+    });
+</script>

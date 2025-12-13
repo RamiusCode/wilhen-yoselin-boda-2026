@@ -1,0 +1,149 @@
+---
+// ComponentePadres.astro
+---
+
+<section class="relative w-full flex items-center justify-center py-10 px-6">
+    
+    <!-- Contenedor principal -->
+    <div class="relative w-full max-w-3xl" id="contenedor-padres">
+        
+        <!-- Texto introductorio -->
+        <div id="texto-intro" class="text-center mb-6">
+            <p class="font-serif  text-[#5D6623] text-base  sm:text-lg  max-w-2xl mx-auto">
+                Con el amor que nos une, la bendición de Dios y el apoyo de<br class="hidden sm:block" />
+                nuestros padres:
+            </p>
+        </div>
+
+        <!-- Contenedor de padres -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-16">
+            
+            <!-- PADRES DEL NOVIO -->
+            <div id="padres-novio" class="text-center space-y-4">
+                <!-- Título -->
+                <h3 class="font-serif  text-[#262A08] text-base sm:text-xl font-semibold tracking-wide mb-4">
+                    PADRES DEL NOVIO
+                </h3>
+                
+                <!-- Nombres de los padres -->
+                <div class="space-y-2">
+                    <p class="font-serif text-[#5D6623] text-xl sm:text-lg">
+                        Marcelino Ervin Gonzáles Rivero
+                    </p>
+                    <p class="font-serif  text-[#5D6623] text-xl sm:text-lg">
+                        JKathia Rivero Rivero 
+                    </p>
+                </div>
+            </div>
+
+            <!-- PADRES DE LA NOVIA -->
+            <div id="padres-novia" class="text-center space-y-4">
+                <!-- Título -->
+                <h3 class="font-serif  text-[#262A08]  text-base sm:text-xl font-semibold tracking-wide mb-4">
+                    PADRES DE LA NOVIA
+                </h3>
+                
+                <!-- Nombres de los padres -->
+                <div class="space-y-2">
+                    <p class="font-serif  text-[#5D6623] text-base sm:text-lg">
+                         Froilan Ferrel Zanabria
+                    </p>
+                    <p class="font-serif  text-[#5D6623] text-base sm:text-lg">
+                        Margarita Tomicha Olivares
+                    </p>
+                </div>
+            </div>
+
+
+                       <!-- PADRES DE LA NOVIA -->
+            <div id="padres-novia" class="text-center space-y-4">
+                <!-- Título -->
+                <h3 class="font-cormorant text-gray-800 text-lg sm:text-xl font-semibold tracking-wide mb-4">
+                    PADRinos
+                </h3>
+                
+                <!-- Nombres de los padrinos de iglesia -->
+                <div class="space-y-2">
+                    <p class="font-cormorant text-[#5D6623] text-base sm:text-lg">
+                         PADRINOS DE IGLESIA
+                    </p>
+                    <p class="font-cormorant text-[#5D6623] text-base sm:text-lg">
+                        Irene Tomicha Olivares
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("👨‍👩‍👧‍👦 Iniciando animaciones de padres...");
+
+        // Estado inicial - TODO invisible
+        gsap.set("#contenedor-padres", { opacity: 0, y: 30 });
+
+        // ═══ ANIMACIÓN SIMULTÁNEA - TODO AL MISMO TIEMPO ═══
+        ScrollTrigger.create({
+            trigger: "#contenedor-padres",
+            start: "top 80%",
+            onEnter: () => {
+                gsap.to("#contenedor-padres", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.out",
+                });
+            },
+            onLeaveBack: () => {
+                gsap.set("#contenedor-padres", { opacity: 0, y: 30 });
+            },
+        });
+
+        // ═══ ACTIVAR ANIMACIÓN SI YA ESTÁ EN VIEWPORT ═══
+        ScrollTrigger.refresh();
+        const triggerElement = document.querySelector("#contenedor-padres");
+        if (triggerElement) {
+            const rect = triggerElement.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight * 0.8;
+            
+            if (isInView) {
+                gsap.to("#contenedor-padres", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.out",
+                });
+            }
+        }
+
+        console.log("✨ Animaciones de padres completadas!");
+    });
+</script>
+
+<style>
+    /* Mejorar la legibilidad del texto */
+    p, h3 {
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Espaciado entre nombres */
+    .space-y-2 > * + * {
+        margin-top: 0.5rem;
+    }
+</style>

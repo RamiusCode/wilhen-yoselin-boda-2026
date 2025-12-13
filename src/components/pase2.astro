@@ -1,0 +1,156 @@
+---
+// ComponenteInvitacionTexto.astro
+---
+
+<section class="relative w-full flex items-center justify-center overflow-hidden">
+    
+    <!-- Imagen de fondo verde con hojas - De esquina a esquina -->
+    <div class="absolute inset-0 w-full h-full">
+        <img
+            id="fondo-verde-pases"
+            src="/imagenes/verde.webp"
+            alt="Fondo verde con hojas"
+            class="w-full h-full object-cover"
+        />
+        
+        <!-- Overlay para mejorar legibilidad del texto -->
+        <div class="absolute inset-0 bg-black/20"></div>
+    </div>
+
+    <!-- Contenido del texto centrado -->
+    <div class="relative z-10 w-full max-w-2xl px-6 py-8" id="contenido-pases">
+        
+        <!-- Línea decorativa superior -->
+        <div class="flex items-center justify-center mb-8">
+            <div class="h-px w-20 bg-white/70"></div>
+            <div class="mx-3 text-white text-2xl">♥</div>
+            <div class="h-px w-20 bg-white/70"></div>
+        </div>
+
+        <!-- Texto principal -->
+        <div id="texto-pases-contenido" class="text-center space-y-3">
+            
+            <!-- Título principal -->
+            <h2 class="font-serif text-xl sm:text-6xl md:text-7xl text-white tracking-wide drop-shadow-lg">
+                Hemos reservado
+            </h2>
+
+            <!-- Número de pases -->
+            <p class="font-romantic text-2xl sm:text-6xl md:text-8xl text-white/95 tracking-wider drop-shadow-lg">
+                2 Pases
+            </p>
+
+            <!-- Texto descriptivo -->
+            <p class="font-serif text-xl sm:text-2xl md:text-3xl text-white/95 tracking-wide drop-shadow-lg">
+                en su honor
+            </p>
+
+        </div>
+
+        <!-- Línea decorativa inferior -->
+        <!-- <div class="flex items-center justify-center mt-8">
+            <div class="h-px w-20 bg-white/70"></div>
+            <div class="mx-3 text-white text-2xl">♥</div>
+            <div class="h-px w-20 bg-white/70"></div>
+        </div> -->
+
+    </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 🎬 ANIMACIONES CON GSAP                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("🎊 Iniciando animaciones del texto de invitación...");
+
+        // Estado inicial - TODO invisible
+        gsap.set("#fondo-verde-pases", { scale: 1.1, opacity: 0 });
+        gsap.set("#contenido-pases", { opacity: 0, y: 30 });
+
+        // ═══ ANIMACIÓN SIMULTÁNEA - TODO AL MISMO TIEMPO ═══
+        ScrollTrigger.create({
+            trigger: "#contenido-pases",
+            start: "top 80%",
+            onEnter: () => {
+                const tl = gsap.timeline();
+
+                // Fondo y contenido aparecen juntos
+                tl.to("#fondo-verde-pases", {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power2.out",
+                }, 0)
+                .to("#contenido-pases", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.out",
+                }, 0);
+            },
+            onLeaveBack: () => {
+                gsap.set("#fondo-verde-pases", { scale: 1.1, opacity: 0 });
+                gsap.set("#contenido-pases", { opacity: 0, y: 30 });
+            },
+        });
+
+        // ═══ ACTIVAR SI YA ESTÁ VISIBLE ═══
+        ScrollTrigger.refresh();
+        const triggerElement = document.querySelector("#contenido-pases");
+        if (triggerElement) {
+            const rect = triggerElement.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight * 0.8;
+            
+            if (isInView) {
+                gsap.to("#fondo-verde-pases", {
+                    scale: 1,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power2.out",
+                });
+                gsap.to("#contenido-pases", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.out",
+                });
+            }
+        }
+
+        // ═══ CORAZONES - Latido suave continuo ═══
+        const corazones = document.querySelectorAll("section .mx-3");
+        corazones.forEach((corazon) => {
+            gsap.to(corazon, {
+                scale: 1.2,
+                duration: 1,
+                ease: "sine.inOut",
+                yoyo: true,
+                repeat: -1
+            });
+        });
+
+        console.log("✨ Animaciones del texto completadas!");
+    });
+</script>
+
+<style>
+    /* Efecto de brillo en el texto principal */
+    #texto-pases-contenido h2 {
+        text-shadow: 0 2px 15px rgba(255, 255, 255, 0.4);
+    }
+
+    #texto-pases-contenido p:nth-of-type(1) {
+        text-shadow: 0 0 30px rgba(201, 169, 97, 0.6);
+    }
+
+    #texto-pases-contenido p:nth-of-type(2) {
+        text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+    }
+</style>

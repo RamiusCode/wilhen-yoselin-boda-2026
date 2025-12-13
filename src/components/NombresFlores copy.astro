@@ -1,5 +1,5 @@
 ---
-// NombresFlores.astro
+// NombresFlores.astro (ComponenteInvitacion.astro)
 ---
 
 <section class="relative w-full">
@@ -42,9 +42,9 @@
     </audio>
 
     <!-- Contenedor de la Imagen con efecto parallax -->
-    <div class="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center">
+    <div class="relative w-full h-screen overflow-hidden">
         <!-- Imagen Principal con efecto parallax -->
-        <div id="parallax-container" class="absolute top-0 left-0 w-full h-[120vh] z-0">
+        <div id="parallax-container" class="absolute top-0 left-0 w-full h-[120vh]">
             <img
                 id="imagen-principal"
                 src="/imagenes/fotoprincipal.webp"
@@ -53,75 +53,20 @@
             />
             
             <!-- Overlay suave para mejorar legibilidad -->
-            <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20"></div>
         </div>
 
         <!-- Partículas flotantes decorativas -->
-        <div id="particulas-container" class="absolute inset-0 pointer-events-none z-5">
+        <div id="particulas-container" class="absolute inset-0 pointer-events-none">
             <div class="particula"></div>
             <div class="particula"></div>
             <div class="particula"></div>
             <div class="particula"></div>
             <div class="particula"></div>
-        </div>
-
-        <!-- CONTENIDO DE TEXTO - CENTRADO SOBRE LA IMAGEN -->
-        <div class="relative z-10 text-center px-6 flex flex-col items-center h-full">
-            
-            <!-- Texto "NUESTRA BODA" - ARRIBA -->
-            <div class="mt-16 md:mt-20">
-                <p id="texto-boda" class="text-white/90 text-sm md:text-base tracking-[0.3em] uppercase font-light">
-                    Nuestra Boda
-                </p>
-            </div>
-
-            <!-- Espaciador que empuja el contenido hacia abajo -->
-            <div class="flex-grow"></div>
-
-            <!-- Nombres de los novios - ABAJO -->
-            <div class="mb-8 space-y-4">
-                <h1 id="nombre-Wilhen" class="font-great-vibes text-5xl md:text-7xl lg:text-8xl text-white drop-shadow-2xl leading-tight">
-                    Wilhen
-                </h1>
-                
-                <!-- Separador con & -->
-                <div id="ampersand" class="flex items-center justify-center gap-4 py-2">
-                    <div class="h-px w-12 md:w-16 bg-white/60"></div>
-                    <span class="font-charm text-4xl md:text-5xl text-white/90">&</span>
-                    <div class="h-px w-12 md:w-16 bg-white/60"></div>
-                </div>
-                
-                <h1 id="nombre-Yoselin" class="font-great-vibes text-5xl md:text-7xl lg:text-8xl text-white drop-shadow-2xl leading-tight">
-                    Yoselin
-                </h1>
-            </div>
-
-            <!-- Fecha de la boda -->
-            <div id="fecha-boda" class="mb-16 md:mb-20 flex items-center gap-3 px-6 py-3 rounded-full border border-white/40 backdrop-blur-sm bg-white/10">
-                <!-- Icono de calendario -->
-                <svg class="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                
-                <p class="text-white text-base md:text-lg tracking-wider font-light">
-                    31 enero 2026
-                </p>
-                
-                <!-- Icono decorativo derecho -->
-                <svg class="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-            </div>
-
-        </div>
-
-        <!-- Indicador de scroll -->
-        <div id="scroll-indicator" class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
-            <svg class="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
         </div>
     </div>
+
+   
 
 </section>
 
@@ -207,115 +152,6 @@
             }
         );
 
-        // ═══ TEXTO "NUESTRA BODA" ═══
-        gsap.fromTo(
-            "#texto-boda",
-            { opacity: 0, y: -20 },
-            { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 0.3 }
-        );
-
-        // ═══ NOMBRE Wilhen - Letra por letra ═══
-        const textoWilhen = "Wilhen";
-        const contenedorWilhen = document.getElementById("nombre-Wilhen");
-        if (contenedorWilhen) {
-            contenedorWilhen.innerHTML = textoWilhen
-                .split("")
-                .map(
-                    (letra) =>
-                        `<span class="letra-animada" style="
-                            opacity: 0; 
-                            display: inline-block; 
-                            transform: translateY(20px) scale(0.8);
-                            filter: blur(3px);
-                        ">${letra}</span>`
-                )
-                .join("");
-
-            gsap.to("#nombre-Wilhen .letra-animada", {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                filter: "blur(0px)",
-                duration: 0.6,
-                ease: "back.out(1.5)",
-                stagger: { each: 0.08, from: "start" },
-                delay: 0.6
-            });
-        }
-
-        // ═══ SÍMBOLO & - Scale con bounce ═══
-        gsap.fromTo(
-            "#ampersand",
-            { opacity: 0, scale: 0.3 },
-            { 
-                opacity: 1, 
-                scale: 1, 
-                duration: 0.8, 
-                ease: "back.out(1.5)",
-                delay: 1
-            }
-        );
-
-        // ═══ NOMBRE Yoselin - Letra por letra ═══
-        const textoYoselin = "Yoselin";
-        const contenedorYoselin = document.getElementById("nombre-Yoselin");
-        if (contenedorYoselin) {
-            contenedorYoselin.innerHTML = textoYoselin
-                .split("")
-                .map(
-                    (letra) =>
-                        `<span class="letra-animada" style="
-                            opacity: 0; 
-                            display: inline-block; 
-                            transform: translateY(20px) scale(0.8);
-                            filter: blur(3px);
-                        ">${letra}</span>`
-                )
-                .join("");
-
-            gsap.to("#nombre-Yoselin .letra-animada", {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                filter: "blur(0px)",
-                duration: 0.6,
-                ease: "back.out(1.5)",
-                stagger: { each: 0.08, from: "start" },
-                delay: 1.3
-            });
-        }
-
-        // ═══ FECHA DE LA BODA ═══
-        gsap.fromTo(
-            "#fecha-boda",
-            { opacity: 0, y: 20, scale: 0.9 },
-            { 
-                opacity: 1, 
-                y: 0, 
-                scale: 1, 
-                duration: 0.8, 
-                ease: "back.out(1.2)",
-                delay: 1.8
-            }
-        );
-
-        // ═══ SCROLL INDICATOR ═══
-        gsap.fromTo(
-            "#scroll-indicator",
-            { opacity: 0, y: -10 },
-            { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 2.2 }
-        );
-
-        // Animación continua del scroll indicator
-        gsap.to("#scroll-indicator", {
-            y: 10,
-            duration: 1.5,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-            delay: 3
-        });
-
         // ═══ EFECTO PARALLAX ELEGANTE ═══
         gsap.to("#parallax-container", {
             yPercent: 30,
@@ -354,14 +190,126 @@
             });
         });
 
+        // ═══ ARO DECORATIVO - Aparece desde abajo con ScrollTrigger ═══
+        gsap.fromTo(
+            "#aro-decorativo",
+            { opacity: 0, y: 100, scale: 0.8, rotation: -15 },
+            { 
+                opacity: 1, 
+                y: 0, 
+                scale: 1, 
+                rotation: 0, 
+                duration: 1.2, 
+                ease: "back.out(1.7)",
+                scrollTrigger: {
+                    trigger: "#aro-decorativo",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            }
+        );
+
+        // ═══ NOMBRE JOHN - Letra por letra con ScrollTrigger ═══
+        const textoJohn = "John";
+        const contenedorJohn = document.getElementById("nombre-john");
+        if (contenedorJohn) {
+            contenedorJohn.innerHTML = textoJohn
+                .split("")
+                .map(
+                    (letra) =>
+                        `<span class="letra-animada" style="
+                            opacity: 0; 
+                            display: inline-block; 
+                            transform: translateY(20px) scale(0.8);
+                            filter: blur(3px);
+                        ">${letra}</span>`
+                )
+                .join("");
+
+            gsap.to("#nombre-john .letra-animada", {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+                duration: 0.6,
+                ease: "back.out(1.5)",
+                stagger: { each: 0.08, from: "start" },
+                scrollTrigger: {
+                    trigger: "#nombre-john",
+                    start: "top 75%",
+                    toggleActions: "play none none none"
+                }
+            });
+        }
+
+        // ═══ SÍMBOLO & - Scale con bounce ═══
+        gsap.fromTo(
+            "#ampersand",
+            { opacity: 0, scale: 0.3, rotation: -180 },
+            { 
+                opacity: 1, 
+                scale: 1, 
+                rotation: 0,
+                duration: 0.8, 
+                ease: "elastic.out(1, 0.5)",
+                scrollTrigger: {
+                    trigger: "#ampersand",
+                    start: "top 75%",
+                    toggleActions: "play none none none"
+                }
+            }
+        );
+
+        // ═══ NOMBRE DAMARYS - Letra por letra ═══
+        const textoDamarys = "Damarys";
+        const contenedorDamarys = document.getElementById("nombre-damarys");
+        if (contenedorDamarys) {
+            contenedorDamarys.innerHTML = textoDamarys
+                .split("")
+                .map(
+                    (letra) =>
+                        `<span class="letra-animada" style="
+                            opacity: 0; 
+                            display: inline-block; 
+                            transform: translateY(20px) scale(0.8);
+                            filter: blur(3px);
+                        ">${letra}</span>`
+                )
+                .join("");
+
+            gsap.to("#nombre-damarys .letra-animada", {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+                duration: 0.6,
+                ease: "back.out(1.5)",
+                stagger: { each: 0.08, from: "start" },
+                scrollTrigger: {
+                    trigger: "#nombre-damarys",
+                    start: "top 75%",
+                    toggleActions: "play none none none"
+                }
+            });
+        }
+
+        // ═══ ROTACIÓN SUAVE Y FLOTACIÓN DEL ARO (loop infinito) ═══
+        gsap.to("#aro-decorativo", {
+            rotation: 8,
+            y: -10,
+            duration: 4,
+            ease: "sine.inOut",
+            yoyo: true,
+            repeat: -1
+        });
+
         // ═══ EFECTO DE BRILLO EN LOS NOMBRES ═══
-        gsap.to("#nombre-Wilhen .letra-animada, #nombre-Yoselin .letra-animada", {
-            textShadow: "0 0 20px rgba(255, 255, 255, 0.8)",
+        gsap.to("#nombre-john, #nombre-damarys", {
+            textShadow: "0 0 20px rgba(201, 169, 97, 0.6)",
             duration: 2,
             ease: "sine.inOut",
             yoyo: true,
-            repeat: -1,
-            delay: 2.5
+            repeat: -1
         });
 
         console.log("✨ Animaciones con parallax completadas!");
@@ -369,21 +317,11 @@
 </script>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-
-    .font-great-vibes {
-        font-family: 'Great Vibes', cursive;
-    }
-
     /* Asegurar que las imágenes carguen correctamente */
     img {
         display: block;
     }
     
-    h1 {
-        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
-    }
-
     /* Efecto hover en letras animadas */
     .letra-animada {
         transition: all 0.3s ease;
@@ -393,8 +331,8 @@
 
     .letra-animada:hover {
         transform: translateY(-5px) scale(1.15) !important;
-        text-shadow: 0 0 20px rgba(255, 255, 255, 0.9) !important;
-        filter: brightness(1.3) !important;
+        text-shadow: 0 0 20px rgba(201, 169, 97, 0.8) !important;
+        filter: brightness(1.2) !important;
     }
 
     /* Partículas decorativas flotantes */
@@ -402,7 +340,7 @@
         position: absolute;
         width: 4px;
         height: 4px;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
+        background: radial-gradient(circle, rgba(201, 169, 97, 0.8), transparent);
         border-radius: 50%;
         pointer-events: none;
     }
@@ -447,10 +385,6 @@
         #reproductor-fijo {
             top: 0.75rem;
             right: 0.75rem;
-        }
-
-        h1 {
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
         }
     }
 </style>
